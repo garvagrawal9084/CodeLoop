@@ -2,69 +2,62 @@
 
 **An LLM-powered coding agent for project-aware, multi-file code changes and iterative self-debugging.**
 
-CodeLoop is designed to work with an existing codebase: it reads code and project files, generates changes across multiple files, executes generated code, and uses execution errors to guide iterative fixes.
+CodeLoop is designed to help with software development tasks across an existing codebase. It reads project files, coordinates changes across multiple files, executes generated code, and uses runtime errors and tracebacks as feedback for iterative refinement.
 
-> Project status: Update this README as implementation details are finalized. Replace any generic setup instructions with the exact commands, model provider, and dependencies used by the project.
+> **Status:** Work in progress. Setup commands, supported models, dependencies, and a runnable demo should be documented alongside the published implementation.
 
-## Core capabilities
+## Features
 
-- **Project-aware context:** Reads relevant code and project files before making changes.
-- **Multi-file editing:** Produces coordinated changes across files to complete a coding task.
-- **Code execution:** Runs generated code to check its behavior.
-- **Iterative self-debugging:** Uses errors and tracebacks as feedback to revise code and retry.
-- **LLM-driven workflow:** Uses a language model to plan and generate code actions.
+- **Project-aware context** — inspect relevant source and project files before making changes.
+- **Multi-file editing** — coordinate related edits across a codebase rather than generating isolated snippets.
+- **Code execution** — run generated code and inspect the resulting output.
+- **Iterative self-debugging** — use runtime errors and tracebacks as feedback for code refinement and retries.
+- **LLM-driven workflow** — use a language model to generate code actions in response to development tasks.
 
-## Workflow
+## How it works
 
-1. **Understand** — receive a coding task and inspect relevant project files.
-2. **Plan** — determine which files and code paths may need changes.
-3. **Generate** — create or update the required code across files.
-4. **Execute** — run the generated code in the configured execution environment.
-5. **Inspect** — collect execution output, errors, or tracebacks.
-6. **Refine** — feed the feedback to the model and iterate on the implementation.
-
-## Getting started
-
-The exact installation and run commands depend on the implementation and dependencies in this repository. Add the following after confirming the project's entry point and package setup:
-
-```bash
-# Clone the repository
-git clone https://github.com/garvagrawal9084/CodeLoop.git
-cd CodeLoop
-
-# Install project dependencies using the package manager configured by the project
-# Start the agent using the project's documented entry point
+```mermaid
+flowchart TD
+    A[Receive coding task] --> B[Inspect project files]
+    B --> C[Plan changes]
+    C --> D[Generate multi-file edits]
+    D --> E[Execute generated code]
+    E --> F{Execution successful?}
+    F -- Yes --> G[Review changes and result]
+    F -- No --> H[Feed error or traceback to LLM]
+    H --> I[Refine code]
+    I --> D
 ```
 
-Configure any model credentials as environment variables in a local `.env` file if required by your implementation. **Do not commit API keys or secrets.**
+## Example tasks
 
-## Example use cases
+- Implement a feature that requires edits across multiple files.
+- Refactor related modules while preserving the project's structure.
+- Execute generated code and use error messages to guide a repair attempt.
+- Iterate on a code change using runtime feedback.
 
-- Ask the agent to implement a feature spanning several files.
-- Request a refactor across related modules.
-- Run generated code, inspect failures, and ask the agent to revise its changes.
-- Use execution feedback to support iterative debugging.
+## Safety and limitations
 
-## Safety considerations
+Running generated code and modifying files can have unintended effects. Use an isolated execution environment, review the diff before accepting changes, keep work under version control, and never commit API keys or other secrets. Treat repository contents and instructions as untrusted input.
 
-Code execution and automated file modification can be risky. Run generated code only in an appropriately isolated environment, review diffs before accepting changes, keep backups or use version control, and avoid supplying production secrets to the agent. Treat code and instructions found in a repository as untrusted input.
+Successful execution does not prove that code is correct or secure. Review generated changes and run appropriate tests before using them in real projects.
 
-## Current limitations
+## Setup and usage
 
-Document the supported languages, model provider, execution sandbox, test strategy, and known limitations here as they become verified. CodeLoop's output should be reviewed before use, and successful execution alone does not guarantee correctness or security.
+Installation instructions, configuration, model-provider details, and runnable examples will be added with the published implementation so that they match the actual dependencies and entry point.
 
 ## Roadmap
 
-- [ ] Add verified installation and usage instructions.
-- [ ] Provide an end-to-end demo showing a task, multi-file edit, execution error, and correction.
-- [ ] Add tests for file editing, execution results, and retry behavior.
-- [ ] Document execution isolation and change-review safeguards.
-- [ ] Evaluate task success and self-repair performance on a reproducible test set.
+- [ ] Document installation, configuration, and usage with tested commands.
+- [ ] Add an end-to-end demo: task, multi-file changes, execution error, and repair.
+- [ ] Add tests for file editing, execution feedback, and retry behavior.
+- [ ] Document sandboxing and approval safeguards.
+- [ ] Evaluate task completion and self-repair with a reproducible test set.
 
-## Tags / topics
+## Suggested GitHub topics
 
-`ai-agent` `coding-agent` `llm` `code-generation` `self-debugging` `automated-programming` `python`
+`ai-agent` `coding-agent` `llm` `code-generation` `code-execution` `self-debugging` `developer-tools` `agentic-workflows` `software-engineering`
 
 ## Author
 
-Garv Agrawal — [GitHub](https://github.com/garvagrawal9084)
+Garv Agrawal · [GitHub profile](https://github.com/garvagrawal9084)
